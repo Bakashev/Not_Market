@@ -26,6 +26,9 @@ for product in products:
     except sqlalchemy.exc.IntegrityError:
         print(f'Позиция {product[0]} есть в БД')
 
+# Создание 1000 Tickets БД
+#models.tickets.Ticket.create_ticket()
+
 
 
 while True:
@@ -44,10 +47,13 @@ while True:
         login_reg = input('Введите логин >')
         password_reg = input('Введите пароль >')
         if models.users.User.is_exist(login_reg):
-            models.users.create_user(login_reg, password_reg)
+            models.users.User.create_user(login_reg, password_reg)
+
 
     elif result == 'Войти':
-        models.users.user_entry()
+        models.users.User.user_entry()
+
+
     else:
         break
 
