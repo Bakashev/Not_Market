@@ -5,7 +5,8 @@ from models import Base
 from sqlalchemy import Integer, String, Column
 from sqlalchemy.orm import relationship
 import models.products
-import  models.tickets
+import models.tickets
+import models.orders
 login = None
 pasword = None
 user_id =None
@@ -44,7 +45,7 @@ class User(Base):
             db.add(tmp)
             db.commit()
             print('Пользователь создан')
-
+    # ОУвеличение баланса
     @staticmethod
     def update_points(id):
         with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
@@ -52,6 +53,24 @@ class User(Base):
             for element in point:
                 element.points += 20
             db.commit()
+
+    # Уменьшение баланса
+    @staticmethod
+    def decrease_pointss(id: int, cost: int ):
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            point = db.query(User).filter(User.id == models.users.user_id)
+            print(models.users.user_id)
+            for element in point:
+                element.points -= cost
+                db.commit()
+
+    #Просмотр баланса
+    @staticmethod
+    def balanse_user():
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(User).filter(User.id==models.users.user_id)
+            for element in res:
+                return element.points
 
     @staticmethod
     def user_entry():
@@ -76,10 +95,19 @@ class User(Base):
                         user_comand = input('Выберите команду:')
                         if user_comand == 'Товары':
                              models.products.get_product()
+                        elif user_comand == 'Купить':
+                            buy = input('Введите номер заказа и количество: ').split()
+                            models.orders.Orders.buy_product(int(buy[0]), int(buy[1]))
+
+                        elif user_comand == 'Профиль':
+                            pass
                         elif user_comand == 'Тикет':
                             ticket = input('Введите свой билет:')
                             models.tickets.Ticket.use_ticket(ticket)
-
+                        else:
+                            exit = input('Вы хотите выйти? да\нет')
+                            if exit.lower() == 'да':
+                                break
 
 
 
