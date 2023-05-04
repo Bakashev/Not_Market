@@ -72,6 +72,30 @@ class User(Base):
             for element in res:
                 return element.points
 
+# отображение пользователя
+    @staticmethod
+    def show_profile(user_id: int):
+        print(f'==={login}===')
+        print(f'Поинтов: {User.balanse_user()}')
+        print(f'\nЗаказы:\n\n')
+        print()
+        date_order = 'Дата заказа'
+        count_order = 'Кол-во'
+        sum_order = 'Сумма'
+        name = 'Название товара'
+        print(f'{date_order:48}{count_order:25}{sum_order:18}{name:41}\n{"-" * 150}')
+
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(models.orders.Orders.order_datetime,
+                           models.orders.Orders.count,
+                           models.products.Product.cost * models.orders.Orders.count,
+                           models.products.Product.name
+
+                           ).join(models.products.Product).filter(models.orders.Orders.user_id == models.users.user_id)
+            for element in res:
+                print(f'{element[0]}{element[1]:25}{element[2]:25}{element[3]:>30}')
+
+
     @staticmethod
     def user_entry():
         login_reg = input('Введите свой логин >')
@@ -93,15 +117,15 @@ class User(Base):
                         pasword = password_reg
                         user_id = element.id
                         user_comand = input('Выберите команду:')
-                        if user_comand == 'Товары':
+                        if user_comand.lower() == 'товары':
                              models.products.get_product()
-                        elif user_comand == 'Купить':
+                        elif user_comand.lower() == 'купить':
                             buy = input('Введите номер заказа и количество: ').split()
                             models.orders.Orders.buy_product(int(buy[0]), int(buy[1]))
 
-                        elif user_comand == 'Профиль':
-                            pass
-                        elif user_comand == 'Тикет':
+                        elif user_comand.lower() == 'профиль':
+                            User.show_profile(models.users.user_id)
+                        elif user_comand.lower()== 'тикет':
                             ticket = input('Введите свой билет:')
                             models.tickets.Ticket.use_ticket(ticket)
                         else:
