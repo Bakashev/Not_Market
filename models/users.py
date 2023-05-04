@@ -116,14 +116,14 @@ class User(Base):
                         login = login_reg
                         pasword = password_reg
                         user_id = element.id
-                        user_comand = input('Выберите команду:')
-                        if user_comand.lower() == 'товары':
+                        user_comand = input('Выберите команду:').lower()
+                        if user_comand == 'товары':
                              models.products.get_product()
-                        elif user_comand.lower() == 'купить':
+                        elif user_comand == 'купить':
                             buy = input('Введите номер заказа и количество: ').split()
                             models.orders.Orders.buy_product(int(buy[0]), int(buy[1]))
 
-                        elif user_comand.lower() == 'профиль':
+                        elif user_comand == 'профиль':
                             User.show_profile(models.users.user_id)
                         elif user_comand.lower()== 'тикет':
                             ticket = input('Введите свой билет:')
