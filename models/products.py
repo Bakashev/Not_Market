@@ -30,6 +30,15 @@ class Product(Base):
             for element in res:
                 return element.cost
 
+
+#Получение названия продукта
+    @staticmethod
+    def get_name(id: int):
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(Product).filter(Product.id == id)
+            for element in res:
+                return element.name
+
 # Список продуктов
 def get_product():
     with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:

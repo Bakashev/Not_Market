@@ -34,4 +34,6 @@ class Orders(Base):
                 print(count)
                 users.User.decrease_pointss(users.user_id, products.Product.get_cost(number_id) * count_)
                 products.decrese_count(number_id, count_)
+                print(f'Вы успешно купили {products.Product.get_name(number_id)} в количестве:'
+                      f'{count_} \nУ вас осталась{users.User.balanse_user()}')
 
