@@ -40,17 +40,17 @@ while True:
     second_comand = '>\tЗарегистрироваться'
     third_comand = '>\tВойти'
     print(f'{first_comand}\n{second_comand}\n{third_comand}')
-    result = input('Введите команду:')
-    if result == 'Товары':
+    result = input('Введите команду:').lower()
+    if result == 'товары':
         models.products.get_product()
-    elif result == 'Зарегистрироваться':
+    elif result == 'зарегистрироваться':
         login_reg = input('Введите логин >')
         password_reg = input('Введите пароль >')
         if models.users.User.is_exist(login_reg):
             models.users.User.create_user(login_reg, password_reg)
 
 
-    elif result == 'Войти':
+    elif result == 'войти':
         models.users.User.user_entry()
 
 

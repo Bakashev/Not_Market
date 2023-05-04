@@ -12,6 +12,34 @@ class Product(Base):
     count = Column(Integer)
     order = relationship('Orders', back_populates='product')
 
+
+
+# Получение из католога количества по id продукта
+    @staticmethod
+    def get_count(id: int):
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(Product).filter(Product.id == id)
+            for element in res:
+                return element.count
+
+# Получение стоимости
+    @staticmethod
+    def get_cost(id: int):
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(Product).filter(Product.id == id)
+            for element in res:
+                return element.cost
+
+
+#Получение названия продукта
+    @staticmethod
+    def get_name(id: int):
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(Product).filter(Product.id == id)
+            for element in res:
+                return element.name
+
+# Список продуктов
 def get_product():
     with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
         res = db.query(Product).filter(Product.count > 0)
@@ -23,12 +51,21 @@ def get_product():
         for element in res:
             print(f'{element.id:<25}{element.cost:<25}{element.count:<25}{element.name:<25}')
         # return res
-
+# Создание записи в катологе
 def creare_product(name:str, cost:int, count:int):
     #connect_db.configurate_engine()
     with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
         tmp = Product(name=name, cost=cost, count=count)
         db.add(tmp)
         db.commit()
+
+# Уменьшение купленного товара
+def decrese_count(id: int, count_: int):
+    with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+        res = db.query(Product).filter(Product.id == id)
+        for element in res:
+            element.count -= count_
+            db.commit()
+
 
 
