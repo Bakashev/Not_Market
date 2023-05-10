@@ -96,42 +96,6 @@ class User(Base):
                 print(f'{element[0]}{element[1]:25}{element[2]:25}{element[3]:>30}')
 
 
-    @staticmethod
-    def user_entry():
-        login_reg = input('Введите свой логин >')
-        password_reg = input('Введите свой пароль >')
-        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
-            res = db.query(User)
-            for element in res:
-                if element.username == login_reg and element.password == password_reg:
-                    while True:
-                        first_user_comand = '>\tТовары'
-                        second_user_comand = '>\tКупить'
-                        third_user_comand = '>\tПрофиль'
-                        four_user_comand = '>\tТикет'
-                        print(f'{first_user_comand}\n{second_user_comand}\n{third_user_comand}\n{four_user_comand}\n')
-                        global login
-                        global pasword
-                        global user_id
-                        login = login_reg
-                        pasword = password_reg
-                        user_id = element.id
-                        user_comand = input('Выберите команду:').lower()
-                        if user_comand == 'товары':
-                             models.products.get_product()
-                        elif user_comand == 'купить':
-                            buy = input('Введите номер заказа и количество: ').split()
-                            models.orders.Orders.buy_product(int(buy[0]), int(buy[1]))
-
-                        elif user_comand == 'профиль':
-                            User.show_profile(models.users.user_id)
-                        elif user_comand.lower()== 'тикет':
-                            ticket = input('Введите свой билет:')
-                            models.tickets.Ticket.use_ticket(ticket)
-                        else:
-                            exit = input('Вы хотите выйти? да\нет')
-                            if exit.lower() == 'да':
-                                break
 
 
 
