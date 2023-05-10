@@ -3,13 +3,6 @@ import models.tickets
 import sqlalchemy.exc
 from models import Base
 
-
-connect_db.configurate_engine()
-
-connect_db.configurate_engine()
-#Base.metadata.drop_all(bind=connect_db.engine)
-Base.metadata.create_all(bind=connect_db.engine)
-
 # Наполнение таблицы продукты
 products = [['Блокнот', 20, 50], ['Блокнот цветной', 15, 0], ['Блокнот', 35, 45], ['Ручка', 100, 10],['Игральные кости', 10, 40]]
 for product in products:

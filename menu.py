@@ -50,31 +50,34 @@ class UserMenu():
                                 break
 
 class StartMenu():
-    while True:
-        first_row = '===Добро пожаловать в "Не магазин" ==='
-        second_row = 'Здесь вы можете обменивать тикеты для того, чтобы приобретать товары'
-        third_row = 'Для взоимодействия используйте команды:'
-        print(f'\t\t\t\t{first_row}\n{second_row}\n{third_row}\n')
-        first_comand = '>\tТовары'
-        second_comand = '>\tЗарегистрироваться'
-        third_comand = '>\tВойти'
-        print(f'{first_comand}\n{second_comand}\n{third_comand}')
-        result = input('Введите команду:').lower()
-        if result == 'товары':
-            models.products.Product.get_product()
-        elif result == 'зарегистрироваться':
-            login_reg = input('Введите логин >')
-            password_reg = input('Введите пароль >')
-            if models.users.User.is_exist(login_reg):
-                models.users.User.create_user(login_reg, password_reg)
+
+    @staticmethod
+    def start_menu():
+        while True:
+            first_row = '===Добро пожаловать в "Не магазин" ==='
+            second_row = 'Здесь вы можете обменивать тикеты для того, чтобы приобретать товары'
+            third_row = 'Для взоимодействия используйте команды:'
+            print(f'\t\t\t\t{first_row}\n{second_row}\n{third_row}\n')
+            first_comand = '>\tТовары'
+            second_comand = '>\tЗарегистрироваться'
+            third_comand = '>\tВойти'
+            print(f'{first_comand}\n{second_comand}\n{third_comand}')
+            result = input('Введите команду:').lower()
+            if result == 'товары':
+                models.products.Product.get_product()
+            elif result == 'зарегистрироваться':
+                login_reg = input('Введите логин >')
+                password_reg = input('Введите пароль >')
+                if models.users.User.is_exist(login_reg):
+                    models.users.User.create_user(login_reg, password_reg)
 
 
-        elif result == 'войти':
-            #models.users.User.user_entry()
-            login_reg = input('Введите свой логин >')
-            password_reg = input('Введите свой пароль >')
-            menu_user = UserMenu(login_reg, password_reg)
+            elif result == 'войти':
+                #models.users.User.user_entry()
+                login_reg = input('Введите свой логин >')
+                password_reg = input('Введите свой пароль >')
+                menu_user = UserMenu(login_reg, password_reg)
 
 
-        else:
-            break
+            else:
+                break
