@@ -12,12 +12,7 @@ from sqlalchemy import create_engine
 if __name__ == '__main__':
     print('PyCharm')
 
-connect_db.configurate_engine()
-Base.metadata.drop_all(bind=connect_db.engine)
-Base.metadata.create_all(bind=connect_db.engine)
-
-while True:
-    start = menu.StartMenu()
+start = menu.StartMenu()
 
 
 
