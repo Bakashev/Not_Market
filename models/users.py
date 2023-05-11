@@ -17,7 +17,7 @@ class User(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    username = Column(String)
+    username = Column(String, unique=True)
     password = Column(String)
     points = Column(Integer)
     ticket = relationship('Ticket', back_populates='user_id')
@@ -45,7 +45,9 @@ class User(Base):
             db.add(tmp)
             db.commit()
             print('Пользователь создан')
-    # ОУвеличение баланса
+
+
+    # Увеличение баланса
     @staticmethod
     def update_points(id):
         with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
