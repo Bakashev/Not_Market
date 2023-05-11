@@ -40,16 +40,17 @@ class Product(Base):
                 return element.name
 
 # Список продуктов
-def get_product():
-    with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
-        res = db.query(Product).filter(Product.count > 0)
-        name_list = ['ID', 'Стоимость', 'Кол-во', 'Название']
-        for i in name_list:
-            print(f'{i:<25}', end='')
-        print()
-        print('#' * 100)
-        for element in res:
-            print(f'{element.id:<25}{element.cost:<25}{element.count:<25}{element.name:<25}')
+    @staticmethod
+    def get_product():
+        with connect_db.Session(autoflush=False, bind=connect_db.engine) as db:
+            res = db.query(Product).filter(Product.count > 0)
+            name_list = ['ID', 'Стоимость', 'Кол-во', 'Название']
+            for i in name_list:
+                print(f'{i:<25}', end='')
+            print()
+            print('#' * 100)
+            for element in res:
+                print(f'{element.id:<25}{element.cost:<25}{element.count:<25}{element.name:<25}')
         # return res
 # Создание записи в катологе
 def creare_product(name:str, cost:int, count:int):

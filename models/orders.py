@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
 import connect_db
-import models.products
 from models import Base
 from models import users
 from models import products
